@@ -14,7 +14,92 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      products: {
+        Row: {
+          category: string | null
+          created_at: string
+          description: string | null
+          dimensions: string | null
+          featured: boolean | null
+          id: string
+          images: string[] | null
+          layer_height: string | null
+          material: string | null
+          name: string
+          price: number
+          print_time: string | null
+          short_description: string | null
+          stock: number
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          dimensions?: string | null
+          featured?: boolean | null
+          id?: string
+          images?: string[] | null
+          layer_height?: string | null
+          material?: string | null
+          name: string
+          price: number
+          print_time?: string | null
+          short_description?: string | null
+          stock?: number
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          dimensions?: string | null
+          featured?: boolean | null
+          id?: string
+          images?: string[] | null
+          layer_height?: string | null
+          material?: string | null
+          name?: string
+          price?: number
+          print_time?: string | null
+          short_description?: string | null
+          stock?: number
+        }
+        Relationships: []
+      }
+      reviews: {
+        Row: {
+          author: string
+          content: string | null
+          created_at: string
+          id: string
+          product_id: string | null
+          rating: number
+        }
+        Insert: {
+          author: string
+          content?: string | null
+          created_at?: string
+          id?: string
+          product_id?: string | null
+          rating: number
+        }
+        Update: {
+          author?: string
+          content?: string | null
+          created_at?: string
+          id?: string
+          product_id?: string | null
+          rating?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reviews_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
