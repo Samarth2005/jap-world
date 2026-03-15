@@ -3,8 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { ShoppingCart, Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/hooks/useCart";
-
-const transition = { duration: 0.5, ease: [0.22, 1, 0.36, 1] };
+import { quint } from "@/lib/motion";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -25,7 +24,6 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  /* Close mobile menu on route change */
   useEffect(() => setMobileOpen(false), [location]);
 
   const handleNavClick = (href: string) => {
@@ -41,13 +39,12 @@ export default function Navbar() {
     <motion.header
       initial={{ y: -80 }}
       animate={{ y: 0 }}
-      transition={transition}
+      transition={quint}
       className={`fixed top-0 left-0 right-0 z-50 h-16 flex items-center transition-all duration-500 ${
         scrolled ? "glass-strong glow-cyan" : "bg-transparent"
       }`}
     >
       <nav className="container mx-auto flex items-center justify-between px-6">
-        {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
           <div className="w-9 h-9 rounded-md border border-primary/40 flex items-center justify-center bg-primary/5">
             <span className="font-bold text-primary text-sm tracking-tighter">L&L</span>
@@ -57,7 +54,6 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* Desktop nav */}
         <ul className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
             <li key={link.label}>
@@ -72,7 +68,6 @@ export default function Navbar() {
           ))}
         </ul>
 
-        {/* Cart + mobile toggle */}
         <div className="flex items-center gap-4">
           <Link to="/cart" className="relative group">
             <ShoppingCart className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
@@ -91,14 +86,13 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            transition={transition}
+            transition={quint}
             className="absolute top-16 inset-x-0 glass-strong p-6 md:hidden"
           >
             <ul className="flex flex-col gap-4">
