@@ -4,12 +4,12 @@ import { ShoppingCart, Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/hooks/useCart";
 import { quint } from "@/lib/motion";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const navLinks = [
-  { label: "Home", href: "/" },
   { label: "Products", href: "/products" },
+  { label: "Categories", href: "/#products" },
   { label: "About", href: "/#about" },
-  { label: "Contact", href: "/#contact" },
 ];
 
 export default function Navbar() {
@@ -41,15 +41,12 @@ export default function Navbar() {
       animate={{ y: 0 }}
       transition={quint}
       className={`fixed top-0 left-0 right-0 z-50 h-16 flex items-center transition-all duration-500 ${
-        scrolled ? "glass-strong glow-cyan" : "bg-transparent"
+        scrolled ? "glass-strong shadow-sm" : "bg-transparent"
       }`}
     >
       <nav className="container mx-auto flex items-center justify-between px-6">
-        <Link to="/" className="flex items-center gap-2">
-          <div className="w-9 h-9 rounded-md border border-primary/40 flex items-center justify-center bg-primary/5">
-            <span className="font-bold text-primary text-sm tracking-tighter">L&L</span>
-          </div>
-          <span className="font-bold text-lg tracking-tight text-foreground hidden sm:inline">
+        <Link to="/" className="flex items-center gap-2.5">
+          <span className="font-bold text-lg tracking-tight text-foreground" style={{ fontFamily: "'Playfair Display', serif" }}>
             Layer & Logic
           </span>
         </Link>
@@ -60,7 +57,7 @@ export default function Navbar() {
               <Link
                 to={link.href.startsWith("/#") ? "/" : link.href}
                 onClick={() => handleNavClick(link.href)}
-                className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300"
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-300"
               >
                 {link.label}
               </Link>
@@ -68,18 +65,19 @@ export default function Navbar() {
           ))}
         </ul>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
+          <ThemeToggle />
           <Link to="/cart" className="relative group">
-            <ShoppingCart className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+            <ShoppingCart className="w-[18px] h-[18px] text-muted-foreground group-hover:text-foreground transition-colors" />
             {items.length > 0 && (
-              <span className="absolute -top-2 -right-2 w-4 h-4 rounded-full bg-accent text-accent-foreground text-[10px] flex items-center justify-center font-mono-data">
+              <span className="absolute -top-2 -right-2 w-4 h-4 rounded-full bg-foreground text-background text-[10px] flex items-center justify-center font-medium">
                 {items.length}
               </span>
             )}
           </Link>
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden text-muted-foreground hover:text-primary transition-colors"
+            className="md:hidden text-muted-foreground hover:text-foreground transition-colors"
           >
             {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -101,7 +99,7 @@ export default function Navbar() {
                   <Link
                     to={link.href.startsWith("/#") ? "/" : link.href}
                     onClick={() => handleNavClick(link.href)}
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                   >
                     {link.label}
                   </Link>
