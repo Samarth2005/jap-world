@@ -6,7 +6,7 @@ export default function ThemeToggle() {
 
   return (
     <button
-      onClick={(e) => toggleTheme(e as unknown as React.MouseEvent<HTMLButtonElement>)}
+      onClick={() => toggleTheme()}
       className="w-9 h-9 rounded-full flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors duration-300"
       aria-label="Toggle theme"
     >
