@@ -1,8 +1,10 @@
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import FeaturedSection from "@/components/FeaturedSection";
-import ProcessSection from "@/components/ProcessSection";
-import ProductGrid from "@/components/ProductGrid";
+import ProductSpotlight from "@/components/ProductSpotlight";
+import CategoriesSection from "@/components/CategoriesSection";
+import CinematicProcess from "@/components/CinematicProcess";
+import NewArrivals from "@/components/NewArrivals";
 import AboutSection from "@/components/AboutSection";
 import ReviewsSection from "@/components/ReviewsSection";
 import ContactSection from "@/components/ContactSection";
@@ -14,8 +16,10 @@ const Index = () => {
       <Navbar />
       <HeroSection />
       <FeaturedSection />
-      <ProcessSection />
-      <ProductGrid />
+      <ProductSpotlight />
+      <CategoriesSection />
+      <CinematicProcess />
+      <NewArrivals />
       <AboutSection />
       <ReviewsSection />
       <ContactSection />

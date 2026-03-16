@@ -13,72 +13,64 @@ export default function Footer() {
   };
 
   return (
-    <footer className="border-t border-border py-16 px-6">
-      <div className="container mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
-          {/* Logo + description */}
-          <div className="md:col-span-2">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-md border border-primary/40 flex items-center justify-center bg-primary/5">
-                <span className="font-bold text-primary text-xs tracking-tighter">L&L</span>
-              </div>
-              <span className="font-bold tracking-tight">Layer & Logic</span>
-            </div>
-            <p className="text-sm text-muted-foreground/60 max-w-sm leading-relaxed mb-6">
-              Precision 3D printed artifacts designed with algorithmic creativity and 
-              manufactured layer by layer in our personal fabrication studio.
+    <footer className="border-t border-border py-20 px-6">
+      <div className="container mx-auto max-w-6xl">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
+          {/* Brand */}
+          <div>
+            <h4 className="text-lg font-bold mb-4">Layer & Logic</h4>
+            <p className="text-sm text-muted-foreground leading-relaxed mb-8 max-w-xs">
+              Precision 3D printed artifacts designed with algorithmic creativity and manufactured layer by layer.
             </p>
-
-            {/* Newsletter */}
-            <form onSubmit={handleSubscribe} className="flex gap-2 max-w-xs">
+            <form onSubmit={handleSubscribe} className="flex gap-2">
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 placeholder="your@email.com"
-                className="flex-1 bg-muted/50 border border-border rounded-lg px-3 py-2 text-xs text-foreground 
-                           placeholder:text-muted-foreground/30 focus:outline-none focus:border-primary/40 transition-colors"
+                className="flex-1 bg-transparent border-b border-border px-0 py-2 text-xs text-foreground placeholder:text-muted-foreground/40 focus:outline-none focus:border-foreground transition-colors"
               />
               <button
                 type="submit"
-                className="px-4 py-2 rounded-lg bg-primary/10 text-primary text-xs hover:bg-primary/20 transition-colors"
+                className="text-xs text-foreground font-medium hover:opacity-70 transition-opacity"
               >
-                {subscribed ? "Subscribed ✓" : "Subscribe"}
+                {subscribed ? "Done ✓" : "Subscribe"}
               </button>
             </form>
           </div>
 
-          {/* Quick links */}
+          {/* Navigation */}
           <div>
-            <h4 className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-muted-foreground/40 mb-4">
-              Navigation
-            </h4>
-            <ul className="space-y-2">
-              {["Home", "Products", "About", "Contact"].map((link) => (
-                <li key={link}>
+            <h4 className="text-xs font-mono-data uppercase tracking-[0.2em] text-muted-foreground mb-6">Navigation</h4>
+            <ul className="space-y-3">
+              {[
+                { label: "Home", to: "/" },
+                { label: "Products", to: "/products" },
+                { label: "About", to: "/#about" },
+                { label: "Contact", to: "/#contact" },
+              ].map((link) => (
+                <li key={link.label}>
                   <Link
-                    to={link === "Home" ? "/" : link === "Products" ? "/products" : `/#${link.toLowerCase()}`}
-                    className="text-sm text-muted-foreground/60 hover:text-primary transition-colors"
+                    to={link.to}
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-300"
                   >
-                    {link}
+                    {link.label}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Socials */}
+          {/* Social */}
           <div>
-            <h4 className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-muted-foreground/40 mb-4">
-              Connect
-            </h4>
-            <ul className="space-y-2">
-              {["Twitter / X", "Instagram", "Discord", "GitHub"].map((social) => (
+            <h4 className="text-xs font-mono-data uppercase tracking-[0.2em] text-muted-foreground mb-6">Social</h4>
+            <ul className="space-y-3">
+              {["Instagram", "Twitter", "GitHub"].map((social) => (
                 <li key={social}>
                   <a
                     href="#"
-                    className="text-sm text-muted-foreground/60 hover:text-primary transition-colors"
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-300"
                   >
                     {social}
                   </a>
@@ -88,12 +80,11 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Copyright */}
-        <div className="mt-12 pt-6 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-[10px] font-mono-data text-muted-foreground/30">
+        <div className="mt-16 pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-xs text-muted-foreground">
             © {new Date().getFullYear()} Layer & Logic. All rights reserved.
           </p>
-          <p className="text-[10px] font-mono-data text-muted-foreground/30">
+          <p className="text-xs text-muted-foreground">
             Precision in every layer.
           </p>
         </div>
