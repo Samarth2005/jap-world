@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
-import { products } from "@/data/products";
+import { useProducts } from "@/hooks/useProducts";
 import ProductCard from "./ProductCard";
 import { quint } from "@/lib/motion";
 
 export default function ProductGrid() {
+  const { data: products = [] } = useProducts();
+
   return (
     <section id="products" className="py-32 px-6">
       <div className="container mx-auto max-w-6xl">
