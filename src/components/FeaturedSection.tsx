@@ -1,9 +1,10 @@
 import { motion } from "framer-motion";
-import { products } from "@/data/products";
+import { useProducts } from "@/hooks/useProducts";
 import ProductCard from "./ProductCard";
 import { quint } from "@/lib/motion";
 
 export default function FeaturedSection() {
+  const { data: products = [] } = useProducts();
   const featured = products.filter((p) => p.featured).slice(0, 4);
 
   return (

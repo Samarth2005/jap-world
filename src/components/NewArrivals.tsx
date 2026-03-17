@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { products } from "@/data/products";
+import { useProducts } from "@/hooks/useProducts";
 import ProductCard from "./ProductCard";
 import { quint } from "@/lib/motion";
 
@@ -10,6 +10,7 @@ const badges: Record<string, string> = {
 };
 
 export default function NewArrivals() {
+  const { data: products = [] } = useProducts();
   const arrivals = products.filter((p) => !p.featured).slice(0, 4);
 
   return (
