@@ -48,6 +48,7 @@ export default function AboutSection() {
                 </div>
               )}
               <iframe
+                id="splineFrame"
                 src="https://my.spline.design/3dprinter-gwKGVag0cgOwB2rSEBVZUntf/"
                 frameBorder="0"
                 width="100%"
