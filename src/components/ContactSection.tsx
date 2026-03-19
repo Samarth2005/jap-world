@@ -132,7 +132,9 @@ export default function ContactSection() {
                 <label className="text-xs text-muted-foreground uppercase tracking-wider font-mono-data block mb-2">Name</label>
                 <input
                   type="text"
+                  name="name"
                   required
+                  maxLength={100}
                   className="w-full bg-transparent border-b border-border px-0 py-3 text-sm text-foreground placeholder:text-muted-foreground/40 focus:outline-none focus:border-foreground transition-colors duration-300"
                   placeholder="Your name"
                 />
