@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { quint } from "@/lib/motion";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -11,6 +11,20 @@ const stats = [
 
 export default function AboutSection() {
   const [iframeLoaded, setIframeLoaded] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const iframe = document.getElementById("splineFrame") as HTMLIFrameElement;
+      if (iframe) {
+        iframe.style.opacity = "0";
+        setTimeout(() => {
+          iframe.src = iframe.src;
+          iframe.style.opacity = "1";
+        }, 100);
+      }
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <section id="about" className="py-32 px-6">
@@ -34,6 +48,7 @@ export default function AboutSection() {
                 </div>
               )}
               <iframe
+                id="splineFrame"
                 src="https://my.spline.design/3dprinter-gwKGVag0cgOwB2rSEBVZUntf/"
                 frameBorder="0"
                 width="100%"
