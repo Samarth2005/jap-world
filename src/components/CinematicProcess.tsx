@@ -79,17 +79,7 @@ export default function CinematicProcess() {
                     <p className="text-muted-foreground max-w-sm mx-auto lg:mx-0 leading-relaxed mb-6">
                       {step.description}
                     </p>
-                    <div className="overflow-hidden rounded-lg max-w-sm mx-auto lg:mx-0 lg:ml-auto">
-                      <motion.img
-                        src={step.image}
-                        alt={step.title}
-                        className="w-full aspect-[3/2] object-cover"
-                        initial={{ scale: 1.1 }}
-                        whileInView={{ scale: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-                      />
-                    </div>
+                    <ParallaxImage src={step.image} alt={step.title} speed={0.15 + i * 0.08} />
                   </div>
 
                   {/* Center dot with glow */}
