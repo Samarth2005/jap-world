@@ -14,6 +14,27 @@ const steps = [
   { icon: Truck, title: "Ship", description: "Carefully packaged and shipped worldwide.", image: processShip },
 ];
 
+function ParallaxImage({ src, alt, speed }: { src: string; alt: string; speed: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const y = useTransform(scrollYProgress, [0, 1], [speed * 100, speed * -100]);
+
+  return (
+    <div ref={ref} className="overflow-hidden rounded-lg max-w-sm mx-auto lg:mx-0 lg:ml-auto">
+      <motion.img
+        src={src}
+        alt={alt}
+        className="w-full aspect-[3/2] object-cover"
+        style={{ y }}
+        initial={{ scale: 1.15 }}
+        whileInView={{ scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+      />
+    </div>
+  );
+}
+
 export default function CinematicProcess() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({

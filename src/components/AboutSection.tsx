@@ -20,11 +20,17 @@ export default function AboutSection() {
             viewport={{ once: true }}
             transition={{ ...quint, duration: 0.8 }}
           >
-            <img
-              src={workshopImg}
-              alt="3D printing workshop"
-              className="w-full aspect-[4/3] object-cover rounded-2xl"
-            />
+            <div className="w-full aspect-[4/3] rounded-2xl overflow-hidden">
+              <iframe
+                src="https://my.spline.design/3dprinter-gwKGVag0cgOwB2rSEBVZUntf/"
+                frameBorder="0"
+                width="100%"
+                height="100%"
+                className="w-full h-full"
+                title="3D Printer Scene"
+                loading="lazy"
+              />
+            </div>
           </motion.div>
 
           {/* Content */}
