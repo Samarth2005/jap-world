@@ -1,13 +1,55 @@
 import { motion } from "framer-motion";
 import { Send, Mail, MapPin } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { quint } from "@/lib/motion";
+
+/** Sanitize user input — strip HTML tags and trim */
+function sanitize(value: string): string {
+  return value.replace(/<[^>]*>/g, "").trim();
+}
+
+/** Basic email validation */
+function isValidEmail(email: string): boolean {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+const SUBMIT_COOLDOWN_MS = 5000;
 
 export default function ContactSection() {
   const [sent, setSent] = useState(false);
+  const [error, setError] = useState("");
+  const lastSubmit = useRef(0);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setError("");
+
+    // Rate limit
+    const now = Date.now();
+    if (now - lastSubmit.current < SUBMIT_COOLDOWN_MS) {
+      setError("Please wait a few seconds before sending again.");
+      return;
+    }
+
+    const form = e.currentTarget;
+    const name = sanitize((form.elements.namedItem("name") as HTMLInputElement).value);
+    const email = sanitize((form.elements.namedItem("email") as HTMLInputElement).value);
+    const message = sanitize((form.elements.namedItem("message") as HTMLTextAreaElement).value);
+
+    if (!name || name.length < 2 || name.length > 100) {
+      setError("Please enter a valid name (2–100 characters).");
+      return;
+    }
+    if (!isValidEmail(email)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+    if (!message || message.length < 10 || message.length > 2000) {
+      setError("Message must be between 10 and 2000 characters.");
+      return;
+    }
+
+    lastSubmit.current = now;
     setSent(true);
     setTimeout(() => setSent(false), 3000);
   };
@@ -90,7 +132,9 @@ export default function ContactSection() {
                 <label className="text-xs text-muted-foreground uppercase tracking-wider font-mono-data block mb-2">Name</label>
                 <input
                   type="text"
+                  name="name"
                   required
+                  maxLength={100}
                   className="w-full bg-transparent border-b border-border px-0 py-3 text-sm text-foreground placeholder:text-muted-foreground/40 focus:outline-none focus:border-foreground transition-colors duration-300"
                   placeholder="Your name"
                 />
@@ -99,7 +143,9 @@ export default function ContactSection() {
                 <label className="text-xs text-muted-foreground uppercase tracking-wider font-mono-data block mb-2">Email</label>
                 <input
                   type="email"
+                  name="email"
                   required
+                  maxLength={254}
                   className="w-full bg-transparent border-b border-border px-0 py-3 text-sm text-foreground placeholder:text-muted-foreground/40 focus:outline-none focus:border-foreground transition-colors duration-300"
                   placeholder="your@email.com"
                 />
@@ -108,15 +154,21 @@ export default function ContactSection() {
             <div>
               <label className="text-xs text-muted-foreground uppercase tracking-wider font-mono-data block mb-2">Message</label>
               <textarea
+                name="message"
                 required
                 rows={4}
+                maxLength={2000}
                 className="w-full bg-transparent border-b border-border px-0 py-3 text-sm text-foreground placeholder:text-muted-foreground/40 focus:outline-none focus:border-foreground transition-colors duration-300 resize-none"
                 placeholder="Tell us about your project..."
               />
             </div>
+            {error && (
+              <p className="text-sm text-destructive">{error}</p>
+            )}
             <button
               type="submit"
-              className="px-8 py-3.5 bg-foreground text-background text-sm font-medium rounded-full hover:opacity-90 transition-opacity duration-300 flex items-center gap-2"
+              disabled={sent}
+              className="px-8 py-3.5 bg-foreground text-background text-sm font-medium rounded-full hover:opacity-90 transition-opacity duration-300 flex items-center gap-2 disabled:opacity-50"
             >
               {sent ? "Message Sent ✓" : <><Send className="w-4 h-4" /> Send Message</>}
             </button>
