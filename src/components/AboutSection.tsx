@@ -12,6 +12,20 @@ const stats = [
 export default function AboutSection() {
   const [iframeLoaded, setIframeLoaded] = useState(false);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const iframe = document.getElementById("splineFrame") as HTMLIFrameElement;
+      if (iframe) {
+        iframe.style.opacity = "0";
+        setTimeout(() => {
+          iframe.src = iframe.src;
+          iframe.style.opacity = "1";
+        }, 100);
+      }
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section id="about" className="py-32 px-6">
       <div className="container mx-auto max-w-6xl">
