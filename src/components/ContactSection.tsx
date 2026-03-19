@@ -143,7 +143,9 @@ export default function ContactSection() {
                 <label className="text-xs text-muted-foreground uppercase tracking-wider font-mono-data block mb-2">Email</label>
                 <input
                   type="email"
+                  name="email"
                   required
+                  maxLength={254}
                   className="w-full bg-transparent border-b border-border px-0 py-3 text-sm text-foreground placeholder:text-muted-foreground/40 focus:outline-none focus:border-foreground transition-colors duration-300"
                   placeholder="your@email.com"
                 />
