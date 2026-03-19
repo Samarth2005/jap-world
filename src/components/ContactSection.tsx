@@ -154,15 +154,21 @@ export default function ContactSection() {
             <div>
               <label className="text-xs text-muted-foreground uppercase tracking-wider font-mono-data block mb-2">Message</label>
               <textarea
+                name="message"
                 required
                 rows={4}
+                maxLength={2000}
                 className="w-full bg-transparent border-b border-border px-0 py-3 text-sm text-foreground placeholder:text-muted-foreground/40 focus:outline-none focus:border-foreground transition-colors duration-300 resize-none"
                 placeholder="Tell us about your project..."
               />
             </div>
+            {error && (
+              <p className="text-sm text-destructive">{error}</p>
+            )}
             <button
               type="submit"
-              className="px-8 py-3.5 bg-foreground text-background text-sm font-medium rounded-full hover:opacity-90 transition-opacity duration-300 flex items-center gap-2"
+              disabled={sent}
+              className="px-8 py-3.5 bg-foreground text-background text-sm font-medium rounded-full hover:opacity-90 transition-opacity duration-300 flex items-center gap-2 disabled:opacity-50"
             >
               {sent ? "Message Sent ✓" : <><Send className="w-4 h-4" /> Send Message</>}
             </button>
