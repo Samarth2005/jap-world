@@ -53,9 +53,9 @@ const PRODUCT_DATA: Record<ProductId, ProductData> = {
     description: 'Hand-finished PLA+ print at 0.05mm layer height. 12-hour print time with intricate parametric scales and articulated joints.',
     image: 'https://images.unsplash.com/photo-1581783898377-1c85bf937427?w=600&h=600&fit=crop',
     colors: {
-      gradient: 'from-zinc-600 to-zinc-900',
-      glow: 'bg-zinc-400',
-      ring: 'border-l-zinc-400/50',
+      gradient: 'from-muted to-background',
+      glow: 'bg-foreground/30',
+      ring: 'border-l-foreground/20',
     },
     stats: { connectionStatus: 'In Stock', batteryLevel: 85 },
     features: [
@@ -70,9 +70,9 @@ const PRODUCT_DATA: Record<ProductId, ProductData> = {
     description: 'Resin-printed limited edition with hand-painted obsidian finish. Museum-grade detail at 0.02mm resolution with UV-cured coating.',
     image: 'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&h=600&fit=crop',
     colors: {
-      gradient: 'from-neutral-600 to-neutral-900',
-      glow: 'bg-neutral-300',
-      ring: 'border-r-neutral-300/50',
+      gradient: 'from-muted to-background',
+      glow: 'bg-foreground/20',
+      ring: 'border-r-foreground/15',
     },
     stats: { connectionStatus: 'Limited Edition', batteryLevel: 12 },
     features: [
