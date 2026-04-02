@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
 import type { Product } from "@/data/products";
 import { useCart } from "@/hooks/useCart";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { quint } from "@/lib/motion";
 import { Eye, ShoppingBag } from "lucide-react";
 
@@ -15,6 +15,25 @@ interface Props {
 export default function ProductCard({ product, index = 0, badge }: Props) {
   const { addItem } = useCart();
   const [added, setAdded] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const x = useMotionValue(0.5);
+  const y = useMotionValue(0.5);
+
+  const rotateX = useSpring(useTransform(y, [0, 1], [6, -6]), { stiffness: 200, damping: 20 });
+  const rotateY = useSpring(useTransform(x, [0, 1], [-6, 6]), { stiffness: 200, damping: 20 });
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const rect = cardRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    x.set((e.clientX - rect.left) / rect.width);
+    y.set((e.clientY - rect.top) / rect.height);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0.5);
+    y.set(0.5);
+  };
 
   const handleAdd = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -26,11 +45,15 @@ export default function ProductCard({ product, index = 0, badge }: Props) {
 
   return (
     <motion.div
+      ref={cardRef}
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
-      transition={{ ...quint, delay: index * 0.1 }}
-      className="group relative"
+      transition={{ ...quint, delay: index * 0.15 }}
+      style={{ rotateX, rotateY, transformPerspective: 800 }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className="group relative will-change-transform"
     >
       <div className="relative aspect-[3/4] overflow-hidden rounded-xl bg-muted">
         <img
