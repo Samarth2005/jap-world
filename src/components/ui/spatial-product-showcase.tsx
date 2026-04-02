@@ -139,10 +139,7 @@ const ANIMATIONS = {
 
 const BackgroundGradient = ({ isLeft }: { isLeft: boolean }) => (
   <div className="absolute inset-0 overflow-hidden">
-    <div className={cn(
-      "absolute inset-0 bg-gradient-to-br opacity-20 transition-all duration-700",
-      isLeft ? "from-zinc-600 to-zinc-900" : "from-neutral-600 to-neutral-900"
-    )} />
+    <div className="absolute inset-0 bg-gradient-to-br from-muted to-background opacity-20 transition-all duration-700" />
   </div>
 );
 
