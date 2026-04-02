@@ -187,7 +187,7 @@ const ProductVisual = ({ data, isLeft }: { data: ProductData; isLeft: boolean })
 const ProductDetails = ({ data, isLeft }: { data: ProductData; isLeft: boolean }) => {
   const alignClass = isLeft ? 'items-start text-left' : 'items-end text-right';
   const flexDirClass = isLeft ? 'flex-row' : 'flex-row-reverse';
-  const barColorClass = isLeft ? 'left-0 bg-zinc-400' : 'right-0 bg-neutral-300';
+  const barColorClass = isLeft ? 'left-0 bg-primary' : 'right-0 bg-muted-foreground';
 
   return (
     <motion.div
