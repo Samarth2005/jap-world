@@ -26,6 +26,8 @@ function AnimatedRoutes() {
         <Route path="/products" element={<ProductsPage />} />
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/cart" element={<CartPage />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/success" element={<SuccessPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AnimatePresence>

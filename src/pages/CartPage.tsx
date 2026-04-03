@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Trash2, ArrowLeft } from "lucide-react";
 import { useCart } from "@/hooks/useCart";
 import Navbar from "@/components/Navbar";
