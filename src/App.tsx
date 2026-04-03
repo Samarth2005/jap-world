@@ -1,12 +1,12 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
-import { SpacemanThemeProvider } from "@space-man/react-theme-animation";
 import { AnimatePresence } from "framer-motion";
 
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { CartProvider } from "@/hooks/useCart";
+import { ThemeProvider } from "@/hooks/useTheme";
 import Index from "./pages/Index";
 import ProductsPage from "./pages/ProductsPage";
 import ProductDetail from "./pages/ProductDetail";
@@ -35,7 +35,7 @@ function AnimatedRoutes() {
 }
 
 const App = () => (
-  <SpacemanThemeProvider defaultTheme="dark">
+  <ThemeProvider defaultTheme="dark">
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <CartProvider>
@@ -47,7 +47,7 @@ const App = () => (
         </CartProvider>
       </TooltipProvider>
     </QueryClientProvider>
-  </SpacemanThemeProvider>
+  </ThemeProvider>
 );
 
 export default App;
