@@ -25,7 +25,7 @@ export default function AboutSection() {
             viewport={{ once: true }}
             transition={{ ...quint, duration: 0.8 }}
           >
-            <div className="relative w-full rounded-2xl overflow-hidden" style={{ height: "650px" }}>
+            <div className="relative w-full rounded-2xl overflow-hidden will-change-transform" style={{ height: "650px", transform: "translateZ(0)" }}>
               {!iframeLoaded && (
                 <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-muted/50 rounded-2xl">
                   <Skeleton className="w-full h-full absolute inset-0 rounded-2xl" />
