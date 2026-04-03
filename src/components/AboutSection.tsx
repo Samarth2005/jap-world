@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { quint } from "@/lib/motion";
 import { Skeleton } from "@/components/ui/skeleton";
 
