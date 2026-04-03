@@ -9,6 +9,7 @@ import { quint } from "@/lib/motion";
 
 export default function CartPage() {
   const { items, removeItem, clearCart, total } = useCart();
+  const navigate = useNavigate();
 
   return (
     <PageTransition>
