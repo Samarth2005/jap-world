@@ -7,33 +7,31 @@ import { quintSlow } from "@/lib/motion";
 export default function HeroSection() {
   return (
     <section className="relative h-screen w-full overflow-hidden">
-      {/* Video background with cinematic zoom */}
-      <motion.div
-        className="absolute inset-0"
-        initial={{ scale: 1 }}
-        animate={{ scale: 1.08 }}
-        transition={{ duration: 30, ease: "linear", repeat: Infinity, repeatType: "reverse" }}
-      >
+      {/* Video background — hardware-accelerated, no zoom animation to reduce GPU load */}
+      <div className="absolute inset-0 will-change-transform" style={{ transform: "translateZ(0)" }}>
         <video
           src={heroVideo.url}
           autoPlay
           muted
           loop
           playsInline
+          preload="auto"
+          poster=""
           className="w-full h-full object-cover"
+          style={{ willChange: "auto" }}
         />
-      </motion.div>
+      </div>
 
-      {/* Dark gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/40 to-background" />
+      {/* Dark gradient overlay — hides compression artifacts */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/50 to-background" />
 
-      {/* Hero content */}
-      <div className="relative z-10 flex flex-col items-center justify-center h-full px-6 text-center">
+      {/* Hero content — left-aligned for premium feel */}
+      <div className="relative z-10 flex flex-col items-start justify-center h-full px-6 sm:px-12 lg:px-20 max-w-7xl mx-auto">
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ ...quintSlow, delay: 0.3 }}
-          className="text-4xl sm:text-5xl lg:text-7xl font-semibold leading-[1.1] max-w-4xl tracking-tight"
+          transition={{ ...quintSlow, delay: 0.3, duration: 1.4 }}
+          className="text-4xl sm:text-5xl lg:text-7xl font-semibold leading-[1.1] max-w-3xl tracking-tight"
         >
           Precision 3D Printing,
           <br />
@@ -43,7 +41,7 @@ export default function HeroSection() {
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ ...quintSlow, delay: 0.5 }}
+          transition={{ ...quintSlow, delay: 0.6, duration: 1.4 }}
           className="mt-6 text-muted-foreground max-w-md text-base sm:text-lg font-light leading-relaxed"
         >
           Premium quality 3D printed objects designed with accuracy and attention to detail.
@@ -52,8 +50,8 @@ export default function HeroSection() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ ...quintSlow, delay: 0.7 }}
-          className="mt-10 flex flex-col sm:flex-row items-center gap-4"
+          transition={{ ...quintSlow, delay: 0.9, duration: 1.4 }}
+          className="mt-10 flex flex-col sm:flex-row items-start gap-4"
         >
           <Link
             to="/products"
@@ -76,13 +74,13 @@ export default function HeroSection() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.2 }}
+        transition={{ delay: 1.5, duration: 1 }}
         className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
       >
         <span className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground font-light">
           Scroll to explore
         </span>
-        <motion.div animate={{ y: [0, 6, 0] }} transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}>
+        <motion.div animate={{ y: [0, 6, 0] }} transition={{ repeat: Infinity, duration: 2.4, ease: "easeInOut" }}>
           <ChevronDown className="w-4 h-4 text-muted-foreground" />
         </motion.div>
       </motion.div>

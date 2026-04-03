@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { quint } from "@/lib/motion";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -12,19 +12,7 @@ const stats = [
 export default function AboutSection() {
   const [iframeLoaded, setIframeLoaded] = useState(false);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const iframe = document.getElementById("splineFrame") as HTMLIFrameElement;
-      if (iframe) {
-        iframe.style.opacity = "0";
-        setTimeout(() => {
-          iframe.src = iframe.src;
-          iframe.style.opacity = "1";
-        }, 100);
-      }
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
+  // Removed aggressive 5s iframe reload — it caused jank and unnecessary network requests
 
   return (
     <section id="about" className="py-32 px-6">
@@ -37,7 +25,7 @@ export default function AboutSection() {
             viewport={{ once: true }}
             transition={{ ...quint, duration: 0.8 }}
           >
-            <div className="relative w-full rounded-2xl overflow-hidden" style={{ height: "650px" }}>
+            <div className="relative w-full rounded-2xl overflow-hidden will-change-transform" style={{ height: "650px", transform: "translateZ(0)" }}>
               {!iframeLoaded && (
                 <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-muted/50 rounded-2xl">
                   <Skeleton className="w-full h-full absolute inset-0 rounded-2xl" />
