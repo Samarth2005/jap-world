@@ -50,7 +50,7 @@ export default function CartPage() {
                   <span className="text-sm text-muted-foreground">Total</span>
                   <span className="font-mono text-xl text-foreground font-bold">${total.toFixed(2)}</span>
                 </div>
-                <button className="w-full py-3 rounded-lg bg-foreground text-background font-medium text-sm hover:opacity-90 active:scale-[0.98] transition-all duration-200">
+                <button onClick={() => navigate("/checkout")} className="w-full py-3 rounded-lg bg-foreground text-background font-medium text-sm hover:opacity-90 active:scale-[0.98] transition-all duration-200">
                   Proceed to Checkout
                 </button>
                 <button onClick={clearCart} className="w-full py-2 mt-2 text-xs text-muted-foreground hover:text-destructive transition-colors">
