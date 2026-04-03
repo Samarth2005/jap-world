@@ -1,13 +1,24 @@
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
 import heroVideo from "@/assets/hero-video.mp4.asset.json";
 import { quintSlow } from "@/lib/motion";
 
 export default function HeroSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+
+  // Video moves at full speed, text moves slower (parallax)
+  const textY = useTransform(scrollYProgress, [0, 1], [0, -120]);
+  const textOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+
   return (
-    <section className="relative h-screen w-full overflow-hidden">
-      {/* Video background — hardware-accelerated, no zoom animation to reduce GPU load */}
+    <section ref={sectionRef} className="relative h-screen w-full overflow-hidden">
+      {/* Video background */}
       <div className="absolute inset-0 will-change-transform" style={{ transform: "translateZ(0)" }}>
         <video
           src={heroVideo.url}
@@ -22,11 +33,14 @@ export default function HeroSection() {
         />
       </div>
 
-      {/* Dark gradient overlay — hides compression artifacts */}
+      {/* Dark gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/50 to-background" />
 
-      {/* Hero content — left-aligned for premium feel */}
-      <div className="relative z-10 flex flex-col items-start justify-center h-full px-6 sm:px-12 lg:px-20 max-w-7xl mx-auto">
+      {/* Hero content with parallax — moves slower than scroll */}
+      <motion.div
+        style={{ y: textY, opacity: textOpacity }}
+        className="relative z-10 flex flex-col items-start justify-center h-full px-6 sm:px-12 lg:px-20 max-w-7xl mx-auto will-change-transform"
+      >
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -68,18 +82,21 @@ export default function HeroSection() {
             View Collection
           </a>
         </motion.div>
-      </div>
+      </motion.div>
 
       {/* Scroll indicator */}
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 1 }}
+        style={{ opacity: textOpacity }}
         className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
       >
-        <span className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground font-light">
+        <motion.span
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5, duration: 1 }}
+          className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground font-light"
+        >
           Scroll to explore
-        </span>
+        </motion.span>
         <motion.div animate={{ y: [0, 6, 0] }} transition={{ repeat: Infinity, duration: 2.4, ease: "easeInOut" }}>
           <ChevronDown className="w-4 h-4 text-muted-foreground" />
         </motion.div>
