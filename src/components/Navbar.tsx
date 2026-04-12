@@ -40,8 +40,10 @@ export default function Navbar() {
       initial={{ y: -80 }}
       animate={{ y: 0 }}
       transition={quint}
-      className={`fixed top-0 left-0 right-0 z-50 h-16 flex items-center transition-all duration-500 ${
-        scrolled ? "glass-strong shadow-sm" : "bg-transparent"
+      className={`fixed top-0 left-0 right-0 z-50 h-16 flex items-center transition-all duration-700 ease-out ${
+        scrolled
+          ? "bg-background/70 backdrop-blur-xl border-b border-border/50 shadow-sm"
+          : "bg-transparent backdrop-blur-none border-b border-transparent"
       }`}
     >
       <nav className="container mx-auto flex items-center justify-between px-6">
