@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useCallback } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -12,9 +12,12 @@ export default function HeroSection() {
     offset: ["start start", "end start"],
   });
 
-  // Video moves at full speed, text moves slower (parallax)
   const textY = useTransform(scrollYProgress, [0, 1], [0, -120]);
   const textOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+
+  const onVideoReady = useCallback(() => {
+    window.dispatchEvent(new Event("hero-video-ready"));
+  }, []);
 
   return (
     <section ref={sectionRef} className="relative h-screen w-full overflow-hidden">
@@ -28,6 +31,7 @@ export default function HeroSection() {
           playsInline
           preload="auto"
           poster=""
+          onCanPlayThrough={onVideoReady}
           className="w-full h-full object-cover"
           style={{ willChange: "auto" }}
         />
@@ -36,7 +40,7 @@ export default function HeroSection() {
       {/* Dark gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/50 to-background" />
 
-      {/* Hero content with parallax — moves slower than scroll */}
+      {/* Hero content with parallax */}
       <motion.div
         style={{ y: textY, opacity: textOpacity }}
         className="relative z-10 flex flex-col items-start justify-center h-full px-6 sm:px-12 lg:px-20 max-w-7xl mx-auto will-change-transform"

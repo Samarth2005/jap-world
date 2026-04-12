@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useCallback } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
@@ -38,18 +38,14 @@ function AnimatedRoutes() {
 
 const App = () => {
   const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 2200);
-    return () => clearTimeout(timer);
-  }, []);
+  const handleFinished = useCallback(() => setLoading(false), []);
 
   return (
     <ThemeProvider defaultTheme="dark">
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <CartProvider>
-            <Preloader isVisible={loading} />
+            <Preloader isVisible={loading} onFinished={handleFinished} />
             <Toaster />
             <Sonner />
             <BrowserRouter>

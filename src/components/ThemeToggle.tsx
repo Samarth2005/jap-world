@@ -6,7 +6,7 @@ export default function ThemeToggle() {
 
   return (
     <button
-      onClick={toggleTheme}
+      onClick={(e) => toggleTheme(e)}
       className="w-9 h-9 rounded-full flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors duration-300"
       aria-label="Toggle theme"
     >
