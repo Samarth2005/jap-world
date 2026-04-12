@@ -85,10 +85,10 @@ export default function HeroSection() {
         />
       </motion.div>
 
-      {/* Dark gradient overlay — moves opposite to mouse for depth */}
+      {/* Gradient overlay — lighter in light mode for clarity */}
       <motion.div
         style={{ x: overlayMoveX, y: overlayMoveY }}
-        className="absolute -inset-4 bg-gradient-to-b from-background/80 via-background/50 to-background will-change-transform"
+        className="absolute -inset-4 will-change-transform bg-gradient-to-b from-background/30 via-transparent to-background/80 dark:from-background/70 dark:via-background/40 dark:to-background"
       />
 
       {/* Hero content with scroll parallax + mouse parallax */}
