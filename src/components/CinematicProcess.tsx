@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { Lightbulb, Layers, Sparkles, Truck } from "lucide-react";
 
 import processDesign from "@/assets/process-design.jpg";
@@ -14,24 +14,74 @@ const steps = [
   { icon: Truck, title: "Ship", description: "Carefully packaged and shipped worldwide.", image: processShip },
 ];
 
-function ParallaxImage({ src, alt, speed }: { src: string; alt: string; speed: number }) {
+function StepImage({ src, alt, speed }: { src: string; alt: string; speed: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], [speed * 100, speed * -100]);
+  const isInView = useInView(ref, { once: false, margin: "-50px" });
 
   return (
     <div ref={ref} className="overflow-hidden rounded-lg max-w-sm mx-auto lg:mx-0 lg:ml-auto">
       <motion.img
         src={src}
         alt={alt}
-        className="w-full aspect-[3/2] object-cover"
+        className="w-full aspect-[3/2] object-cover transition-shadow duration-700"
         style={{ y }}
-        initial={{ scale: 1.15 }}
-        whileInView={{ scale: 1 }}
-        viewport={{ once: true }}
+        animate={isInView ? {
+          scale: 1.04,
+          boxShadow: "0 8px 30px -8px hsl(var(--foreground) / 0.15)",
+        } : {
+          scale: 1,
+          boxShadow: "0 0px 0px 0px hsl(var(--foreground) / 0)",
+        }}
         transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
       />
     </div>
+  );
+}
+
+function StepNode({ step, index }: { step: typeof steps[0]; index: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: false, margin: "-120px" });
+  const Icon = step.icon;
+  const isLeft = index % 2 === 0;
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+      className={`flex flex-col lg:flex-row items-center gap-8 ${
+        isLeft ? "lg:flex-row" : "lg:flex-row-reverse"
+      }`}
+    >
+      {/* Text + image side */}
+      <div className={`flex-1 ${isLeft ? "lg:text-right" : "lg:text-left"} text-center`}>
+        <span className="font-mono-data text-xs text-muted-foreground uppercase tracking-[0.3em]">
+          Step {String(index + 1).padStart(2, "0")}
+        </span>
+        <h3 className="text-2xl sm:text-3xl font-bold mt-2 mb-3">{step.title}</h3>
+        <p className="text-muted-foreground max-w-sm mx-auto lg:mx-0 leading-relaxed mb-6">
+          {step.description}
+        </p>
+        <StepImage src={step.image} alt={step.title} speed={0.15 + index * 0.08} />
+      </div>
+
+      {/* Center dot with active glow */}
+      <div
+        className={`relative z-10 w-14 h-14 rounded-full border bg-background flex items-center justify-center shrink-0 transition-all duration-700 ${
+          isInView
+            ? "border-foreground/60 shadow-[0_0_20px_hsl(var(--foreground)/0.25)] scale-110"
+            : "border-border shadow-[0_0_12px_hsl(var(--foreground)/0.05)] scale-100"
+        }`}
+      >
+        <Icon className={`w-5 h-5 transition-colors duration-500 ${isInView ? "text-foreground" : "text-muted-foreground"}`} />
+      </div>
+
+      <div className="flex-1" />
+    </motion.div>
   );
 }
 
@@ -76,42 +126,9 @@ export default function CinematicProcess() {
           </div>
 
           <div className="space-y-24 lg:space-y-32">
-            {steps.map((step, i) => {
-              const Icon = step.icon;
-              const isLeft = i % 2 === 0;
-
-              return (
-                <motion.div
-                  key={step.title}
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-                  className={`flex flex-col lg:flex-row items-center gap-8 ${
-                    isLeft ? "lg:flex-row" : "lg:flex-row-reverse"
-                  }`}
-                >
-                  {/* Text + image side */}
-                  <div className={`flex-1 ${isLeft ? "lg:text-right" : "lg:text-left"} text-center`}>
-                    <span className="font-mono-data text-xs text-muted-foreground uppercase tracking-[0.3em]">
-                      Step {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <h3 className="text-2xl sm:text-3xl font-bold mt-2 mb-3">{step.title}</h3>
-                    <p className="text-muted-foreground max-w-sm mx-auto lg:mx-0 leading-relaxed mb-6">
-                      {step.description}
-                    </p>
-                    <ParallaxImage src={step.image} alt={step.title} speed={0.15 + i * 0.08} />
-                  </div>
-
-                  {/* Center dot with glow */}
-                  <div className="relative z-10 w-14 h-14 rounded-full border border-border bg-background flex items-center justify-center shrink-0 shadow-[0_0_12px_hsl(var(--foreground)/0.1)]">
-                    <Icon className="w-5 h-5 text-foreground" />
-                  </div>
-
-                  <div className="flex-1" />
-                </motion.div>
-              );
-            })}
+            {steps.map((step, i) => (
+              <StepNode key={step.title} step={step} index={i} />
+            ))}
           </div>
         </div>
       </div>
