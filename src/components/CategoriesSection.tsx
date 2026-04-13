@@ -41,7 +41,6 @@ export default function CategoriesSection() {
               transition={{ ...quint, duration: 0.9, delay: i * 0.12 }}
               className="group relative overflow-hidden rounded-xl cursor-pointer aspect-[4/3]"
             >
-            >
               <Link to="/products" className="block w-full h-full">
                 <img
                   src={cat.image}
