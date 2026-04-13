@@ -8,7 +8,7 @@ import ThemeToggle from "@/components/ThemeToggle";
 
 const navLinks = [
   { label: "Products", href: "/products" },
-  { label: "Categories", href: "/#products" },
+  { label: "Categories", href: "/#categories" },
   { label: "About", href: "/#about" },
 ];
 
@@ -31,6 +31,9 @@ export default function Navbar() {
       const id = href.slice(2);
       if (location.pathname === "/") {
         document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+      } else {
+        // Navigate to home first, then scroll after render
+        window.location.href = href;
       }
     }
   };
