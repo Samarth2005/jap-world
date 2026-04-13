@@ -35,13 +35,11 @@ export default function CategoriesSection() {
           {categories.map((cat, i) => (
             <motion.div
               key={cat.name}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ ...quint, delay: i * 0.1 }}
-              className={`group relative overflow-hidden rounded-xl cursor-pointer ${
-                i < 2 ? "aspect-[4/3]" : "aspect-[4/3]"
-              }`}
+              initial={{ opacity: 0, y: 40, scale: 0.97 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ ...quint, duration: 0.9, delay: i * 0.12 }}
+              className="group relative overflow-hidden rounded-xl cursor-pointer aspect-[4/3]"
             >
               <Link to="/products" className="block w-full h-full">
                 <img
