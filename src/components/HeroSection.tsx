@@ -101,7 +101,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 40 }}
             animate={hasEntered ? { opacity: 1, y: 0 } : {}}
             transition={{ ...quintSlow, delay: 0.1, duration: 1.4 }}
-            className="text-4xl sm:text-5xl lg:text-7xl font-semibold leading-[1.1] max-w-3xl tracking-tight"
+            className="text-4xl sm:text-5xl lg:text-7xl font-semibold leading-[1.1] max-w-3xl tracking-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.3)] dark:drop-shadow-[0_2px_16px_rgba(0,0,0,0.6)]"
           >
             Precision 3D Printing,
             <br />
@@ -112,7 +112,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={hasEntered ? { opacity: 1, y: 0 } : {}}
             transition={{ ...quintSlow, delay: 0.3, duration: 1.4 }}
-            className="mt-6 text-muted-foreground max-w-md text-base sm:text-lg font-light leading-relaxed"
+            className="mt-6 text-muted-foreground max-w-md text-base sm:text-lg font-light leading-relaxed drop-shadow-[0_1px_6px_rgba(0,0,0,0.2)] dark:drop-shadow-[0_1px_8px_rgba(0,0,0,0.5)]"
           >
             Premium quality 3D printed objects designed with accuracy and attention to detail.
           </motion.p>

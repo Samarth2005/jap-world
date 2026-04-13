@@ -51,7 +51,7 @@ export default function CategoriesSection() {
                 />
                 <div className="absolute inset-0 bg-transparent group-hover:bg-background/15 transition-colors duration-500" />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <h3 className="text-xl sm:text-2xl font-bold text-foreground">{cat.name}</h3>
+                  <h3 className="text-xl sm:text-2xl font-bold text-foreground drop-shadow-[0_2px_10px_rgba(0,0,0,0.4)] dark:drop-shadow-[0_2px_12px_rgba(0,0,0,0.7)]">{cat.name}</h3>
                 </div>
               </Link>
             </motion.div>
