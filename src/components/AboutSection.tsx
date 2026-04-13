@@ -42,19 +42,9 @@ export default function AboutSection() {
                 width="100%"
                 height="100%"
                 className={`w-full h-full transition-opacity duration-700 ${iframeLoaded ? "opacity-100" : "opacity-0"}`}
-                style={{ animationDuration: "12s" }}
                 title="3D Printer Scene"
                 loading="lazy"
-                onLoad={() => {
-                  setIframeLoaded(true);
-                  // Slow down Spline animations via postMessage
-                  const frame = document.getElementById("splineFrame") as HTMLIFrameElement;
-                  if (frame?.contentWindow) {
-                    try {
-                      frame.contentWindow.postMessage({ type: "setSpeed", speed: 0.3 }, "*");
-                    } catch (e) { /* cross-origin, Spline URL param handles it */ }
-                  }
-                }}
+                onLoad={() => setIframeLoaded(true)}
               />
             </div>
           </motion.div>
