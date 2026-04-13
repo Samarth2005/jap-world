@@ -88,7 +88,7 @@ export default function HeroSection() {
       {/* Gradient overlay — lighter in light mode for clarity */}
       <motion.div
         style={{ x: overlayMoveX, y: overlayMoveY }}
-        className="absolute -inset-4 will-change-transform bg-gradient-to-b from-background/30 via-transparent to-background/80 dark:from-background/70 dark:via-background/40 dark:to-background"
+        className="absolute -inset-4 will-change-transform bg-gradient-to-b from-transparent via-transparent to-background/15 dark:to-background/40"
       />
 
       {/* Hero content with scroll parallax + mouse parallax */}
